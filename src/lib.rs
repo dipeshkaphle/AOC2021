@@ -1,3 +1,13 @@
+use std::{
+    fs::{self, File},
+    io::BufReader,
+};
+pub fn get_buffer(filename: &str) -> BufReader<File> {
+    let f = fs::File::open(filename).unwrap();
+    let reader = BufReader::new(f);
+    reader
+}
+
 pub mod day1;
 pub mod day2;
 pub mod day3;

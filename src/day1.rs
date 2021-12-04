@@ -4,10 +4,11 @@ use std::{
     io::{BufRead, BufReader},
 };
 
+use crate::get_buffer;
+
 impl Day1 {
-    pub fn solve() -> i32 {
-        let f = fs::File::open("day1.txt").unwrap();
-        let reader = BufReader::new(f);
+    pub fn part_1() -> i32 {
+        let reader = get_buffer("day1.txt");
         let vec = reader
             .lines()
             .into_iter()
@@ -23,9 +24,8 @@ impl Day1 {
             .sum::<i32>();
         return ans.to_owned();
     }
-    pub fn solve_pt2() -> i32 {
-        let f = fs::File::open("day1.txt").unwrap();
-        let reader = BufReader::new(f);
+    pub fn part_2() -> i32 {
+        let reader = get_buffer("day1.txt");
         let vec = reader
             .lines()
             .into_iter()
@@ -46,7 +46,14 @@ impl Day1 {
             .map(|_x| 1)
             .sum::<i32>();
         return ans.to_owned();
+    }
+}
 
-        // unimplemented!()
+mod tests {
+    #[test]
+    fn it_works() {
+        use super::Day1;
+        println!("{}", Day1::part_1());
+        println!("{}", Day1::part_2());
     }
 }
