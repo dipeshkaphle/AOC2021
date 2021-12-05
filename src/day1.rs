@@ -1,14 +1,11 @@
 pub struct Day1 {}
-use std::{
-    fs,
-    io::{BufRead, BufReader},
-};
+use std::io::BufRead;
 
 use crate::get_buffer;
 
 impl Day1 {
     pub fn part_1() -> i32 {
-        let reader = get_buffer("day1.txt");
+        let reader = get_buffer("input/day1.txt");
         let vec = reader
             .lines()
             .into_iter()
@@ -25,7 +22,7 @@ impl Day1 {
         return ans.to_owned();
     }
     pub fn part_2() -> i32 {
-        let reader = get_buffer("day1.txt");
+        let reader = get_buffer("input/day1.txt");
         let vec = reader
             .lines()
             .into_iter()

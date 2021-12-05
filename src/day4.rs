@@ -5,7 +5,7 @@ use crate::get_buffer;
 pub struct Day4 {}
 impl Day4 {
     pub fn read_grids() -> (Vec<usize>, Vec<Vec<Vec<(usize, bool)>>>) {
-        let reader = get_buffer("day4.txt");
+        let reader = get_buffer("input/day4.txt");
         let mut iters = reader.lines().into_iter();
         let first_line = iters
             .next()

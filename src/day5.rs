@@ -6,7 +6,7 @@ pub struct Day5 {}
 
 impl Day5 {
     fn inp() -> Vec<Vec<i32>> {
-        let reader = get_buffer("day5.txt");
+        let reader = get_buffer("input/day5.txt");
         reader
             .lines()
             .into_iter()
@@ -47,8 +47,8 @@ impl Day5 {
             // println!("{},{}", x, y);
             *(mp.entry(x).or_insert(HashMap::new()).entry(y).or_insert(0)) += 1;
             while !(x == line[2] && y == line[3]) {
-                x += (delta_x / (divisor));
-                y += (delta_y / (divisor));
+                x += delta_x / divisor;
+                y += delta_y / divisor;
                 // println!("{},{}", x, y);
                 *(mp.entry(x).or_insert(HashMap::new()).entry(y).or_insert(0)) += 1;
             }

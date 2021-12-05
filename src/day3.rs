@@ -119,7 +119,7 @@ pub struct Day3 {}
 
 impl Day3 {
     pub fn part_1() -> usize {
-        let reader = get_buffer("day3.txt");
+        let reader = get_buffer("input/day3.txt");
         let mut counter = Bits::new();
         reader
             .lines()
@@ -130,7 +130,7 @@ impl Day3 {
     }
 
     pub fn part_2() -> usize {
-        let reader = get_buffer("day3.txt");
+        let reader = get_buffer("input/day3.txt");
         let mut tr = Trie::new();
         reader.lines().into_iter().for_each(|x| {
             tr.insert(&x.unwrap());

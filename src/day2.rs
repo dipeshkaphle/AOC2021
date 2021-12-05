@@ -5,7 +5,7 @@ pub struct Day2 {}
 
 impl Day2 {
     pub fn part_1() -> i32 {
-        let reader = get_buffer("day2.txt");
+        let reader = get_buffer("input/day2.txt");
         let mut x = 0;
         let mut y = 0;
         reader.lines().into_iter().for_each(|a| {
@@ -28,7 +28,7 @@ impl Day2 {
     }
 
     pub fn part_2() -> i32 {
-        let reader = get_buffer("day2.txt");
+        let reader = get_buffer("input/day2.txt");
         let mut x = 0;
         let mut y = 0;
         let mut aim = 0;
@@ -42,7 +42,7 @@ impl Day2 {
             let delta = split[1].parse::<i32>().unwrap();
             if &split[0] == "forward" {
                 x += delta;
-                y += (aim * delta);
+                y += aim * delta;
             } else if &split[0] == "down" {
                 aim += delta;
             } else {
