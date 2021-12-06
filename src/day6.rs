@@ -21,12 +21,8 @@ impl Day6 {
             counts[x as usize] += 1;
         }
         for _ in 0..end {
-            let new_cnt = counts[0];
-            for x in 0..=7 {
-                counts[x] = counts[x + 1];
-            }
-            counts[6] += new_cnt;
-            counts[8] = new_cnt;
+            counts.rotate_left(1);
+            counts[6] += counts[8];
         }
         counts.into_iter().sum()
     }
