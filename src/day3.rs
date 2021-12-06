@@ -129,6 +129,53 @@ impl Day3 {
         gamma_rate * epsilon_rate
     }
 
+    pub fn calculate(mut inp: Vec<String>, f: fn(usize, usize) -> char) -> usize {
+        let mut i = 0;
+        loop {
+            let ones = inp
+                .iter()
+                .filter(|x| x.as_bytes()[i] as char == '1')
+                .count();
+            let zeros = inp
+                .iter()
+                .filter(|x| x.as_bytes()[i] as char == '0')
+                .count();
+            let c = f(ones, zeros);
+            inp = inp
+                .into_iter()
+                .filter(|x| x.as_bytes()[i] as char == c)
+                .collect::<Vec<String>>();
+            if inp.len() == 1 {
+                break;
+            }
+            i += 1;
+        }
+        usize::from_str_radix(inp.first().unwrap(), 2).unwrap()
+    }
+
+    pub fn part_2_without_trie() -> usize {
+        let lines = get_buffer("input/day3.txt")
+            .lines()
+            .into_iter()
+            .map(|x| x.unwrap())
+            .collect::<Vec<String>>();
+        let o2 = Self::calculate(lines.clone(), |ones, zeros| {
+            if zeros > ones {
+                return '0';
+            } else {
+                return '1';
+            }
+        });
+        let co2 = Self::calculate(lines.clone(), |ones, zeros| {
+            if zeros <= ones {
+                return '0';
+            } else {
+                return '1';
+            }
+        });
+        o2 * co2
+    }
+
     pub fn part_2() -> usize {
         let reader = get_buffer("input/day3.txt");
         let mut tr = Trie::new();
@@ -176,5 +223,6 @@ mod test {
         use super::Day3;
         println!("{}", Day3::part_1());
         println!("{}", Day3::part_2());
+        println!("{}", Day3::part_2_without_trie());
     }
 }

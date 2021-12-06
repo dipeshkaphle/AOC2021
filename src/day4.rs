@@ -87,8 +87,6 @@ impl Day4 {
                     done.push(k);
                 }
             }
-            // println!("{}", x);
-            // println!("{:?}", grids);
             if !done.is_empty() {
                 let a = done
                     .iter()
@@ -102,12 +100,15 @@ impl Day4 {
     }
     pub fn part_2() -> usize {
         let (numbers, mut grids) = Day4::read_grids();
-        let mut last_done = vec![];
+        let mut last_done = 0;
         let mut already_done = HashSet::new();
         let mut last = 0;
         for x in &numbers {
             let mut done = vec![];
             for k in 0..(grids.len()) {
+                if already_done.contains(&k) {
+                    continue;
+                }
                 let g = &mut grids[k];
                 for i in 0..5 {
                     for j in 0..5 {
@@ -116,26 +117,19 @@ impl Day4 {
                         }
                     }
                 }
-                if !already_done.contains(&k) && Self::is_done(g) {
+                if Self::is_done(g) {
                     done.push(k);
                 }
             }
             if !(&done).is_empty() {
-                last_done = vec![];
                 done.iter().for_each(|a| {
                     already_done.insert(*a);
-                    last_done.push(grids[*a].clone());
+                    last_done = *a;
                 });
                 last = *x;
             }
         }
-        let a = last_done
-            .iter()
-            .map(|y| Self::compute_val(y))
-            .max()
-            .unwrap();
-        // println!("{:?}, {}, {}", last_done, last, a);
-        return a * (last);
+        Self::compute_val(&grids[last_done]) * last
     }
 }
 #[cfg(test)]
@@ -145,6 +139,5 @@ mod test {
         use super::Day4;
         println!("{}", Day4::part_1());
         println!("{}", Day4::part_2());
-        // println!("{}", Day3::part_2());
     }
 }
