@@ -16,7 +16,7 @@ impl Day14 {
             let next_ln = lines.next();
             match next_ln {
                 Some(x) => {
-                    let split = x.split("->").map(|y| y.trim()).collect::<Vec<&str>>();
+                    let split = x.split(" -> ").map(|y| y.trim()).collect::<Vec<&str>>();
                     rules.insert(split[0].to_owned(), split[1].to_owned());
                 }
                 None => break,
@@ -53,21 +53,23 @@ impl Day14 {
             .collect::<String>();
         *pairs.entry(fst).or_insert(0) += *occ;
         *pairs.entry(snd).or_insert(0) += *occ;
-        // pairs.insert(fst, *occ);
     }
 
-    fn get_individual_counts(pairs: &HashMap<String, u128>) -> HashMap<char, u128> {
+    fn get_individual_counts(
+        pairs: &HashMap<String, u128>,
+        last_char: char,
+    ) -> HashMap<char, u128> {
         let mut h = HashMap::new();
         for (k, v) in pairs {
-            let chars = k.chars().collect::<Vec<char>>();
-            for c in chars {
-                *h.entry(c).or_insert(0) += v;
-            }
+            let mut chars = k.chars();
+            *h.entry(chars.next().unwrap()).or_insert(0) += v;
         }
+        *h.entry(last_char).or_insert(0) += 1;
         h
     }
     fn common(lim: usize) -> u128 {
         let (template, rules) = Self::read();
+        let last_char = template.as_bytes()[template.len() - 1] as char;
         let mut pairs = Self::split_to_pairs(&template);
         for _ in 0..lim {
             //
@@ -82,20 +84,9 @@ impl Day14 {
             }
             pairs = new_pairs;
         }
-        let h = Self::get_individual_counts(&pairs)
-            .into_iter()
-            .map(|(k, v)| {
-                if v % 2 == 0 {
-                    return (k, v / 2);
-                } else {
-                    return (k, (v + 1) / 2);
-                }
-            })
-            .collect::<HashMap<char, u128>>();
-        println!("{:?}", h);
+        let h = Self::get_individual_counts(&pairs, last_char);
         let mx = h.values().into_iter().max().unwrap().clone();
         let mn = h.values().into_iter().min().unwrap().clone();
-        println!("{} {}", mx, mn);
         return mx - mn;
     }
 
